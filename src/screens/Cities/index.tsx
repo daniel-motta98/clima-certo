@@ -9,11 +9,12 @@ const Home: React.FC = () => {
 
   return (
     <S.Container>
+      <S.BoxHeader>
+          <Input placeholder='Pesquise pelo nome da cidade' value={searchCity} onChangeText={text => setSearchCity(text)} nameIcon={'search'} colorIcon={'#000'} sizeIcon={32} />
+      </S.BoxHeader>
       <S.BoxLabelNoCities>
         <S.LabelBold>Parece que você ainda não adicionou uma cidade. 😕</S.LabelBold>
-        <S.LabelNormal>
-          Adicione uma cidade acessando o campo "cidades" na parte inferior do aplicativo, caso ache viável digite o nome da mesma na barra de busca.
-          </S.LabelNormal>
+        <S.LabelNormal>Tente adicionar uma cidade usando a barra de busca</S.LabelNormal>
       </S.BoxLabelNoCities>
     </S.Container>
   );
