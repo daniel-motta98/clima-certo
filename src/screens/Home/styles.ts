@@ -1,9 +1,15 @@
 import styled from "styled-components/native";
+import themes from "../../global/themes";
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  margin: 10px;
 `;
 
-export const Label = styled.Text``;
+export const BoxHeader = styled.View`
+  background-color: ${themes.colors.primary};
+  height: 100px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  `;
