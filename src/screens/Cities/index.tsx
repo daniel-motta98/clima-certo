@@ -73,7 +73,7 @@ const Cities: React.FC = () => {
 
   const searchCities = city.filter((item: any) => {
     return item.name.indexOf(searchCity) >= 0;
-  })
+  });
 
   const renderItem = ({ item }: any) => {
     return (
