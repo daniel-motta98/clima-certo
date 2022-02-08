@@ -43,12 +43,12 @@ export const LabelTypeRain = styled.Text`
   color: ${themes.colors.warning200};
   font-size: 16px;
   flex: 1;
-  margin-top: 10px;
+  margin-top: -20px;
 `;
 
 
 export const LabelMinAndMaxForecast = styled.Text`
-  margin-top: 10px;
+  margin-top: -20px;
   color: ${themes.colors.neutral500};
 `;
 

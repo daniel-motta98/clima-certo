@@ -11,7 +11,7 @@ interface ICardForecast {
   labelSubtitle: string;
   typeRain?: string;
   iconLikeName?: any;
-  colorLikeName?: any,
+  iconLikeColor?: any,
   iconLikeSize?: any,
   callBack?: () => void;
   minTemparature?: number;
@@ -27,7 +27,7 @@ const CardForecast: React.FC<ICardForecast> = ({
   typeRain,
   callBack,
   iconLikeName,
-  colorLikeName,
+  iconLikeColor,
   iconLikeSize,
   minTemparature,
   maxTemperature,
@@ -47,7 +47,7 @@ const CardForecast: React.FC<ICardForecast> = ({
           <S.LabelTypeRain>{typeRain}</S.LabelTypeRain>
           <S.CustomButtonAddCity onPress={callBack}>
             <S.LabelAdd>
-                <Icon name={iconLikeName} color={colorLikeName} size={iconLikeSize} />
+                <Icon name={iconLikeName} color={iconLikeColor} size={iconLikeSize} />
             </S.LabelAdd>
           </S.CustomButtonAddCity>
         </S.BoxLabelTypeRainAndButtonAdd>

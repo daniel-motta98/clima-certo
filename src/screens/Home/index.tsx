@@ -61,7 +61,7 @@ const Home: React.FC = () => {
           labelSubtitle={item.subtitle}
           typeRain={item.typeRain}
           iconLikeName={'heart'}
-          colorLikeName={themes.colors.danger200}
+          iconLikeColor={themes.colors.danger200}
           iconLikeSize={32}
           // callBack={handleAddCity}
           minTemparature={item.min}
