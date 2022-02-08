@@ -7,12 +7,19 @@ import themes from "../../global/themes";
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  margin: 10px;
+`;
+
+export const ImageCustom = styled.Image`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%; 
 `;
 
 export const BoxHeader = styled.View`
-  background-color: ${themes.colors.primary};
-  height: 100px;
+  margin-top: 20px;
   border-radius: 10px;
   justify-content: center;
   align-items: center;

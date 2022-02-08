@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
-import themes from '../../global/themes';
+
 import Input from '../../components/Input';
+
+import themes from '../../global/themes';
 
 import CardForecast from '../../components/CardForecast';
 
 import * as  S from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 const Cities: React.FC = () => {
 
+  const { navigate } = useNavigation();
   const [searchCity, setSearchCity] = useState('');
+  const [backgroundUrl, setBackgroundUrl] = useState('https://p0.piqsels.com/preview/622/143/689/4k-wallpaper-clouds-cloudy-dark.jpg')
   const [city, setCity] = useState([
     {
       id: 1,
@@ -71,6 +76,11 @@ const Cities: React.FC = () => {
     Alert.alert('oi', 'oi');
   }
 
+  const handleToGoInformation = () => {
+    //@ts-ignore
+    navigate('InformationWeather');
+  }
+
   const searchCities = city.filter((item: any) => {
     return item.name.indexOf(searchCity) >= 0;
   });
@@ -87,12 +97,15 @@ const Cities: React.FC = () => {
         iconLikeSize={32}
         minTemparature={item.min}
         maxTemperature={item.max}
+        labelButtonBlue={'PRÓXIMAS PREVISÕES'}
+        callBackButtonBlue={handleToGoInformation}
       />
     );
   }
 
   return (
     <S.Container>
+      <S.ImageCustom source={{ uri: backgroundUrl }} />
       <S.BoxHeader>
         <Input placeholder='Pesquise pelo nome da cidade' value={searchCity} onChangeText={text => setSearchCity(text)} nameIcon={'search'} colorIcon={themes.colors.constrast1000} sizeIcon={32} />
       </S.BoxHeader>
