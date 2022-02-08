@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -9,6 +10,8 @@ import Home from '../screens/Home';
 import InformationWeather from '../screens/InformationWeather';
 import Cities from '../screens/Cities';
 import About from '../screens/About';
+
+import themes from '../global/themes';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,7 +25,9 @@ const Tabs: React.FC = () => {
         options={{
           title: 'Início',
           headerTitleAlign: 'center',
-          headerShown: false,
+          headerTitle: 'Cidades Adicionadas',
+          headerTintColor: `${themes.colors.constrast0}`,
+          headerStyle: styles.headerStackStyle,
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
           ),
@@ -30,7 +35,7 @@ const Tabs: React.FC = () => {
       />
        <Tab.Screen
         name="Cities"
-        component={Cities}
+        component={Cities}        
         options={{
           title: 'Cidades',
           headerTitleAlign: 'center',
@@ -67,10 +72,14 @@ const Routes = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen 
-        name={'Informações'}
+        name={'InformationWeather'}
         component={InformationWeather}
         options={{
-          headerShadowVisible: false, // applied here
+          title: 'Próximas Previsões',
+          headerTitleAlign: 'center',
+          headerStyle: styles.headerStackStyle,
+          headerTintColor: themes.colors.constrast0,
+          headerShadowVisible: false,
           headerBackTitleVisible: false,
         }}
       />
@@ -79,3 +88,9 @@ const Routes = () => {
 }
 
 export default Routes;
+
+const styles = StyleSheet.create({
+  headerStackStyle: {
+    backgroundColor: `${themes.colors.primary}`,
+  },
+});

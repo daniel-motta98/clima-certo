@@ -1,3 +1,4 @@
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import themes from "../../global/themes";
 
@@ -23,9 +24,14 @@ export const LabelBold = styled.Text`
   font-size: 25px;
   font-weight: bold;
   text-align: center;
+  color: ${themes.colors.constrast1000};
+
 `;
 export const LabelNormal  = styled.Text`
   font-size: 20px;
   text-align: center;
   margin-top: 20px;
+  color: ${themes.colors.neutral300};
 `;
+
+export const FlatListCustom = styled(FlatList)``;

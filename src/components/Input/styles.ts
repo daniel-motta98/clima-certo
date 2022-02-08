@@ -6,7 +6,7 @@ export const Container = styled.View``;
 export const BoxTextInputCustom = styled.View``;
 
 export const TextInputCustom = styled.TextInput`
-  background-color: ${themes.colors.contrast0};
+  background-color: ${themes.colors.constrast0};
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;

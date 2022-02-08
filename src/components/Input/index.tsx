@@ -21,13 +21,12 @@ const Input: React.FC<IInput> = ({placeholder, nameIcon, colorIcon, sizeIcon, va
       <S.BoxTextInputCustom>
         <S.BoxSearchAndTextInput>
         <S.TextInputCustom
-          testID='input'
           placeholder={placeholder}
           keyboardType='default'
           placeholderTextColor={`${themes.colors.neutral500}`}
           value={value}
           onChangeText={onChangeText}
-          autoCapitalize='characters'
+          autoCapitalize='words'
         />
         <S.BoxIcon>
           <Icon name={nameIcon} color={colorIcon} size={sizeIcon} />
