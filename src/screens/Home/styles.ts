@@ -22,7 +22,7 @@ export const BoxContentHeader = styled.View`
 `
 
 export const WrapperOpacity = styled.View`
-  background-color: 'rgba(0, 0, 0, 0.6)';
+  background-color: 'rgba(0, 0, 0, 0.3)';
   align-items: center;
   border-radius: 15px;
 `;
@@ -61,14 +61,14 @@ export const BoxWrapperInformation = styled.View`
 `;
 
 export const WrapperLabel = styled.Text`
-  color: ${themes.colors.neutral200};
+  color: ${themes.colors.neutral100};
   font-size: 20px;
   flex: 1;
   text-align: center;
 
 `;
 export const WrapperLabelChildren = styled.Text`
-  color: ${themes.colors.neutral200};
+  color: ${themes.colors.neutral100};
   font-size: 20px;
   margin-top: -40px;
   flex: 1;
@@ -79,4 +79,22 @@ export const BoxInfoTemperature = styled.View`
   justify-content: center;
   align-items: center;
   margin: 30px;
+`;
+export const ImageIcon = styled.Image`
+  height: 150px;
+  width: 150px;
+`;
+
+export const BoxImageIcon = styled.View``;
+
+export const BoxLoading = styled.View`
+flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LoadingCustom = styled.ActivityIndicator``;
+
+export const LabelLoading = styled.Text`
+  color: ${themes.colors.neutral500}
 `;

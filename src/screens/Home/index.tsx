@@ -1,58 +1,161 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import Geolocation from '@react-native-community/geolocation';
 
 import Icon from 'react-native-vector-icons/Feather'
 
 import themes from '../../global/themes';
+
+import api from '../../services/api';
 
 import * as  S from './styles';
 
 const Home: React.FC = () => {
 
   const { navigate } = useNavigation();
+  const [backgroundUrl, setBackgroundUrl] = useState('https://p0.piqsels.com/preview/622/143/689/4k-wallpaper-clouds-cloudy-dark.jpg')
+  const [currentLatitude, setCurrentLatitude] = useState(0)
+  const [currentLongitude, setCurrentLongitude] = useState(0)
+  const [watchID, setWatchID] = useState(0);
+  const [currentTemperature, setCurrentTemperature] = useState(0);
+  const [cityName, setCityName] = useState('');
+  const [icon, setIcon] = useState([]);
+  const [wind, setWind] = useState('');
+  const [humidity, setHumidity] = useState('');
+  const [tempMin, setTemMin] = useState(0);
+  const [tempMax, setTemMax] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const callLocation = () => {
+    if (Platform.OS === 'ios') {
+      getLocation();
+    } else {
+      const requestLocationPermission = async () => {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Permissão a localização atual.',
+            message: 'Este aplicativo precisa acessar sua licalização para pegar sua cidade atual, assim consegue retornar a temperatura atual.',
+            buttonNeutral: 'Pergunte-me depois',
+            buttonNegative: 'Cancelar',
+            buttonPositive: 'Ok',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          getLocation();
+        } else {
+          Alert.alert('Falha!', 'Permissão de localização negada!');
+        }
+      };
+      requestLocationPermission();
+    }
+  }
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        setCurrentLatitude(currentLatitude);
+        setCurrentLongitude(currentLongitude);
+      },
+      (error) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+    const watchID = Geolocation.watchPosition((position) => {
+      const currentLatitude = JSON.stringify(position.coords.latitude);
+      const currentLongitude = JSON.stringify(position.coords.longitude);
+      setCurrentLatitude(currentLatitude);
+      setCurrentLongitude(currentLongitude);
+    });
+    setWatchID(watchID);
+  }
+
+
+  useEffect(() => {
+    const getLocation = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get(`/weather?lat=${currentLatitude}&lon=${currentLongitude}&appid=a788f547d04e1ae0fac1ecd5419ae2c1&units=metric`);
+        const { data } = response;
+        setCurrentLatitude(data.lon);
+        setCurrentLongitude(data.lat);
+        setCurrentTemperature(data.main.temp)
+        setCityName(data.name);
+        setIcon(data.weather);
+        setWind(data.wind.speed);
+        setHumidity(data.main.humidity);
+        setTemMin(data.main.temp_min);
+        setTemMax(data.main.temp_max);
+      } catch (err) {
+        console.log('FALHOOUUUU', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getLocation();
+    callLocation();
+  }, []);
 
   return (
-    <S.Container>
-      <S.ImageCustom source={{ uri: 'https://p0.pikist.com/photos/881/387/dawn-sun-mountain-landscape-sky-clouds-heaven-weather-cool-wallpaper.jpg' }} />
-      <S.BoxContentHeader>
-        <S.WrapperOpacity>
-          <S.BoxInfoTemperature>
-            <Icon name={"sun"} color={themes.colors.warning200} size={50} />
-            <S.BoxInfoCurrentTemperature>
-              <S.LabelCurrentTemperature>27</S.LabelCurrentTemperature>
-              <S.LabelTypeTemperature>ºC</S.LabelTypeTemperature>
-            </S.BoxInfoCurrentTemperature>
-            <S.LabelCity>Alto Alegre</S.LabelCity>
-          </S.BoxInfoTemperature>
-        </S.WrapperOpacity>
-      </S.BoxContentHeader>
+    <>
+      {loading && (
+        <S.BoxLoading>
+          <S.LoadingCustom size={'large'} />
+          <S.LabelLoading>Carregando dados, por favor aguarde.</S.LabelLoading>
+        </S.BoxLoading>
+      )}
+      {!loading && (
+        <S.Container>
+          <S.ImageCustom source={{ uri: backgroundUrl }} />
+          <S.BoxContentHeader>
+            <S.WrapperOpacity>
+              <S.BoxInfoTemperature>
+                {icon.map((item: any, index: any) => {
+                  return (
+                    <S.BoxImageIcon key={index}>
+                      <S.ImageIcon source={{ uri: `https://openweathermap.org/img/wn/${item.icon}@2x.png` }} />
+                    </S.BoxImageIcon>
+                  );
+                })}
+                <S.BoxInfoCurrentTemperature>
+                  <S.LabelCurrentTemperature>{currentTemperature.toFixed(0)}</S.LabelCurrentTemperature>
+                  <S.LabelTypeTemperature>ºC</S.LabelTypeTemperature>
+                </S.BoxInfoCurrentTemperature>
+                <S.LabelCity>{cityName}</S.LabelCity>
+              </S.BoxInfoTemperature>
+            </S.WrapperOpacity>
+          </S.BoxContentHeader>
 
-      <S.BoxInfoTemperatureDay>
-        <S.WrapperOpacity>
-          <S.LabelInformations>Informações Adicionais</S.LabelInformations>
-          <S.BoxWrapperInformation>
-            <S.WrapperLabel>Vento</S.WrapperLabel>
-            <S.WrapperLabel>Humidade</S.WrapperLabel>
-          </S.BoxWrapperInformation>
-          <S.BoxWrapperInformation>
-            <S.WrapperLabelChildren>65 m/h</S.WrapperLabelChildren>
-            <S.WrapperLabelChildren>80%</S.WrapperLabelChildren>
-          </S.BoxWrapperInformation>
+          <S.BoxInfoTemperatureDay>
+            <S.WrapperOpacity>
+              <S.LabelInformations>Informações Adicionais</S.LabelInformations>
+              <S.BoxWrapperInformation>
+                <S.WrapperLabel>Vento</S.WrapperLabel>
+                <S.WrapperLabel>Humidade</S.WrapperLabel>
+              </S.BoxWrapperInformation>
+              <S.BoxWrapperInformation>
+                <S.WrapperLabelChildren>{wind} m/h</S.WrapperLabelChildren>
+                <S.WrapperLabelChildren>{humidity}%</S.WrapperLabelChildren>
+              </S.BoxWrapperInformation>
 
-          <S.BoxWrapperInformation>
-            <S.WrapperLabel>Temp. Min</S.WrapperLabel>
-            <S.WrapperLabel>Temp. Max</S.WrapperLabel>
-          </S.BoxWrapperInformation>
+              <S.BoxWrapperInformation>
+                <S.WrapperLabel>Temp. Min</S.WrapperLabel>
+                <S.WrapperLabel>Temp. Max</S.WrapperLabel>
+              </S.BoxWrapperInformation>
+              <S.BoxWrapperInformation>
+                <S.WrapperLabelChildren>{tempMin.toFixed(0)}</S.WrapperLabelChildren>
+                <S.WrapperLabelChildren>{tempMax.toFixed(0)}</S.WrapperLabelChildren>
+              </S.BoxWrapperInformation>
 
-          <S.BoxWrapperInformation>
-            <S.WrapperLabelChildren>21</S.WrapperLabelChildren>
-            <S.WrapperLabelChildren>31</S.WrapperLabelChildren>
-          </S.BoxWrapperInformation>
+            </S.WrapperOpacity>
+          </S.BoxInfoTemperatureDay>
 
-        </S.WrapperOpacity>
-      </S.BoxInfoTemperatureDay>
-
-    </S.Container>
+        </S.Container>
+      )}
+    </>
   );
 }
 

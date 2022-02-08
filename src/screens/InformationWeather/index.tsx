@@ -5,6 +5,7 @@ import * as S from './styles';
 
 const InformationWeather: React.FC = () => {
 
+  const [backgroundUrl, setBackgroundUrl] = useState('https://p0.piqsels.com/preview/622/143/689/4k-wallpaper-clouds-cloudy-dark.jpg')
   const [infoForecast, setInfoForecast] = useState([
     {
       id: 1,
@@ -70,6 +71,7 @@ const InformationWeather: React.FC = () => {
 
   return (
     <S.Container>
+       <S.ImageCustom source={{ uri: backgroundUrl }} />
       <S.FlatListCustom
         data={infoForecast}
         keyExtractor={(item: any) => item.id}

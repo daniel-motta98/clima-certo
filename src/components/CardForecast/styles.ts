@@ -2,11 +2,13 @@ import styled from "styled-components/native";
 import themes from "../../global/themes";
 
 export const BoxCities = styled.View`
-  border: 2px  ${themes.colors.neutral300};;
   margin-top: 20px;
   border-radius: 10px;
   background-color: ${themes.colors.constrast0};
   padding: 15px;
+  background-color: 'rgba(0, 0, 0, 0.3)';
+  margin: 20px;
+
 `;
 
 export const BoxLabelNameCityAndForecast = styled.View`
@@ -14,9 +16,9 @@ export const BoxLabelNameCityAndForecast = styled.View`
 `;
 
 export const LabelNameCity = styled.Text`
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
-  color: ${themes.colors.constrast1000};
+  color: ${themes.colors.constrast0};
 `;
 
 export const CurrentTemperature = styled.Text`
@@ -28,7 +30,7 @@ export const CurrentTemperature = styled.Text`
 
 export const LabelSubtitle = styled.Text`
   font-size: 16px;
-  color: ${themes.colors.neutral700};
+  color: ${themes.colors.danger200};
   margin-top: -15px;
 `;
 
@@ -49,7 +51,7 @@ export const LabelTypeRain = styled.Text`
 
 export const LabelMinAndMaxForecast = styled.Text`
   margin-top: -20px;
-  color: ${themes.colors.neutral500};
+  color: ${themes.colors.constrast0};
 `;
 
 export const CustomButtonAddCity = styled.TouchableOpacity``;
