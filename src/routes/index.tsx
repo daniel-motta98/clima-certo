@@ -24,8 +24,7 @@ const Tabs: React.FC = () => {
         component={Home}
         options={{
           title: 'Início',
-          headerTitleAlign: 'center',
-          headerTitle: 'Cidades Adicionadas',
+          headerShown: false,
           headerTintColor: `${themes.colors.constrast0}`,
           headerStyle: styles.headerStackStyle,
           tabBarIcon: ({ color, size }) => (

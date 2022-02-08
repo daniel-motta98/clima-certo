@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import CardForecast from '../../components/CardForecast';
+import Icon from 'react-native-vector-icons/Feather'
 
 import themes from '../../global/themes';
 
@@ -10,86 +10,48 @@ import * as  S from './styles';
 const Home: React.FC = () => {
 
   const { navigate } = useNavigation();
-  const [city, setCity] = useState([
-    {
-      id: 1,
-      name: 'Alto Alegre',
-      temperature: 18,
-      subtitle: 'Brasil',
-      typeRain: 'Chuva Leve',
-      min: 18,
-      max: 30,
-      favorite: true
-    },
-    {
-      id: 2,
-      name: 'Porto Alegre',
-      temperature: 18,
-      subtitle: 'Brasil',
-      typeRain: 'Chuva Forte',
-      min: 4,
-      max: 12,
-      favorite: true,
-    },
-    {
-      id: 3,
-      name: 'Orlando',
-      temperature: 18,
-      subtitle: 'US',
-      typeRain: 'Tempestade',
-      min: 14,
-      max: 26,
-      favorite: true,
-    }
-  ]);
-
-  const handleAddCity = () => {
-    console.log('funcao like');
-  }
-
-  const handleToGoInformationWeather = () => {
-    //@ts-ignore
-    navigate('InformationWeather');
-  }
-
-  const renderItem = ({ item }: any) => {
-    return (
-      <>
-        <CardForecast
-          labelTitle={item.name}
-          currentTemperature={item.temperature}
-          labelSubtitle={item.subtitle}
-          typeRain={item.typeRain}
-          iconLikeName={'heart'}
-          iconLikeColor={themes.colors.danger200}
-          iconLikeSize={32}
-          // callBack={handleAddCity}
-          minTemparature={item.min}
-          maxTemperature={item.max}
-          callBackButtonBlue={handleToGoInformationWeather}
-          labelButtonBlue={'PRÓXIMAS PREVISÕES'}
-        />
-      </>
-    );
-  }
 
   return (
     <S.Container>
-      {city.length === 0
-        ?
-        <S.BoxLabelNoCities>
-          <S.LabelBold>Você ainda não favoritou nenhuma cidade. 😕</S.LabelBold>
-          <S.LabelNormal>
-            Adicione uma cidade acessando o campo "cidades" na parte inferior do aplicativo, caso ache viável digite o nome da mesma na barra de busca.
-          </S.LabelNormal>
-        </S.BoxLabelNoCities>
-        :
-        <S.FlatListCustom
-          data={city}
-          keyExtractor={(item: any) => item.id}
-          renderItem={renderItem}
-        />
-      }
+      <S.ImageCustom source={{ uri: 'https://p0.pikist.com/photos/881/387/dawn-sun-mountain-landscape-sky-clouds-heaven-weather-cool-wallpaper.jpg' }} />
+      <S.BoxContentHeader>
+        <S.WrapperOpacity>
+          <S.BoxInfoTemperature>
+            <Icon name={"sun"} color={themes.colors.warning200} size={50} />
+            <S.BoxInfoCurrentTemperature>
+              <S.LabelCurrentTemperature>27</S.LabelCurrentTemperature>
+              <S.LabelTypeTemperature>ºC</S.LabelTypeTemperature>
+            </S.BoxInfoCurrentTemperature>
+            <S.LabelCity>Alto Alegre</S.LabelCity>
+          </S.BoxInfoTemperature>
+        </S.WrapperOpacity>
+      </S.BoxContentHeader>
+
+      <S.BoxInfoTemperatureDay>
+        <S.WrapperOpacity>
+          <S.LabelInformations>Informações Adicionais</S.LabelInformations>
+          <S.BoxWrapperInformation>
+            <S.WrapperLabel>Vento</S.WrapperLabel>
+            <S.WrapperLabel>Humidade</S.WrapperLabel>
+          </S.BoxWrapperInformation>
+          <S.BoxWrapperInformation>
+            <S.WrapperLabelChildren>65 m/h</S.WrapperLabelChildren>
+            <S.WrapperLabelChildren>80%</S.WrapperLabelChildren>
+          </S.BoxWrapperInformation>
+
+          <S.BoxWrapperInformation>
+            <S.WrapperLabel>Temp. Min</S.WrapperLabel>
+            <S.WrapperLabel>Temp. Max</S.WrapperLabel>
+          </S.BoxWrapperInformation>
+
+          <S.BoxWrapperInformation>
+            <S.WrapperLabelChildren>21</S.WrapperLabelChildren>
+            <S.WrapperLabelChildren>31</S.WrapperLabelChildren>
+          </S.BoxWrapperInformation>
+
+        </S.WrapperOpacity>
+      </S.BoxInfoTemperatureDay>
+
     </S.Container>
   );
 }
