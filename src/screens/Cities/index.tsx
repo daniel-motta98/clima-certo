@@ -3,6 +3,8 @@ import { Alert } from 'react-native';
 import themes from '../../global/themes';
 import Input from '../../components/Input';
 
+import CardForecast from '../../components/CardForecast';
+
 import * as  S from './styles';
 
 const Cities: React.FC = () => {
@@ -12,7 +14,8 @@ const Cities: React.FC = () => {
     {
       id: 1,
       name: 'Alto Alegre',
-      coutry: 'Brasil',
+      temperature: 18,
+      subtitle: 'Brasil',
       typeRain: 'Chuva Leve',
       min: 18,
       max: 30,
@@ -20,7 +23,8 @@ const Cities: React.FC = () => {
     {
       id: 2,
       name: 'Porto Alegre',
-      coutry: 'Brasil',
+      temperature: 18,
+      subtitle: 'Brasil',
       typeRain: 'Chuva Forte',
       min: 4,
       max: 12,
@@ -28,7 +32,8 @@ const Cities: React.FC = () => {
     {
       id: 3,
       name: 'Orlando',
-      coutry: 'US',
+      temperature: 18,
+      subtitle: 'US',
       typeRain: 'Tempestade',
       min: 14,
       max: 26,
@@ -36,7 +41,8 @@ const Cities: React.FC = () => {
     {
       id: 4,
       name: 'Toronto',
-      coutry: 'Canadá',
+      temperature: 18,
+      subtitle: 'Canadá',
       typeRain: 'Chuva Leve',
       min: -2,
       max: 5,
@@ -44,7 +50,8 @@ const Cities: React.FC = () => {
     {
       id: 5,
       name: 'Páris',
-      coutry: 'França',
+      temperature: 18,
+      subtitle: 'França',
       typeRain: 'Alerta de Granizo',
       min: 17,
       max: 29,
@@ -52,7 +59,8 @@ const Cities: React.FC = () => {
     {
       id: 6,
       name: 'Blumenau',
-      coutry: 'Brasil',
+      temperature: 18,
+      subtitle: 'Brasil',
       typeRain: 'Chuva Forte',
       min: 14,
       max: 26,
@@ -69,31 +77,24 @@ const Cities: React.FC = () => {
 
   const renderItem = ({ item }: any) => {
     return (
-      <S.BoxCities>
-        <S.BoxLabelNameCityAndForecast>
-          <S.LabelNameCity>{item.name}</S.LabelNameCity>
-          <S.LabelForecast>18 ºC</S.LabelForecast>
-        </S.BoxLabelNameCityAndForecast>
-        <S.LabelCountry>{item.coutry}</S.LabelCountry>
-        <S.BoxLabelTypeRainAndButtonAdd>
-          <S.LabelTypeRain>Chuva Fraca</S.LabelTypeRain>
-          <S.CustomButtonAddCity>
-            <S.LabelAdd onPress={(id) => handleAddCity(id)}>
-              <S.CustomIcon name={'hearto'} color={`${themes.colors.danger300}`} size={32} />
-            </S.LabelAdd>
-          </S.CustomButtonAddCity>
-        </S.BoxLabelTypeRainAndButtonAdd>
-        <S.LabelMinAndMaxForecast>min: 13º - max: 25º</S.LabelMinAndMaxForecast>
-
-
-      </S.BoxCities>
+      <CardForecast
+        labelTitle={item.name}
+        currentTemperature={item.temperature}
+        labelSubtitle={item.subtitle}
+        typeRain={item.typeRain}
+        iconLikeName={'hearto'}
+        iconLikeColor={themes.colors.danger200}
+        iconLikeSize={32}
+        minTemparature={item.min}
+        maxTemperature={item.max}
+      />
     );
   }
 
   return (
     <S.Container>
       <S.BoxHeader>
-        <Input placeholder='Pesquise pelo nome da cidade' value={searchCity} onChangeText={text => setSearchCity(text)} nameIcon={'search'} colorIcon={'#000'} sizeIcon={32} />
+        <Input placeholder='Pesquise pelo nome da cidade' value={searchCity} onChangeText={text => setSearchCity(text)} nameIcon={'search'} colorIcon={themes.colors.constrast1000} sizeIcon={32} />
       </S.BoxHeader>
       {searchCities.length === 0
         ?
