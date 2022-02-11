@@ -70,5 +70,7 @@
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Permita que Lavoroagro use sua localização para identificar sua cidade atual, assim conseguiremos retornar a previsão do tempo para você.</string>
 </dict>
 </plist>

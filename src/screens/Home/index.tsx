@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, PermissionsAndroid, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import Geolocation from '@react-native-community/geolocation';
-
-import Icon from 'react-native-vector-icons/Feather'
-
-import themes from '../../global/themes';
 
 import api from '../../services/api';
 
@@ -14,10 +9,9 @@ import * as  S from './styles';
 
 const Home: React.FC = () => {
 
-  const { navigate } = useNavigation();
   const [backgroundUrl, setBackgroundUrl] = useState('https://p0.piqsels.com/preview/622/143/689/4k-wallpaper-clouds-cloudy-dark.jpg')
-  const [currentLatitude, setCurrentLatitude] = useState(0)
-  const [currentLongitude, setCurrentLongitude] = useState(0)
+  const [currentLatitude, setCurrentLatitude] = useState('')
+  const [currentLongitude, setCurrentLongitude] = useState('')
   const [watchID, setWatchID] = useState(0);
   const [currentTemperature, setCurrentTemperature] = useState(0);
   const [cityName, setCityName] = useState('');
@@ -26,7 +20,7 @@ const Home: React.FC = () => {
   const [humidity, setHumidity] = useState('');
   const [tempMin, setTemMin] = useState(0);
   const [tempMax, setTemMax] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const callLocation = () => {
     if (Platform.OS === 'ios') {
@@ -71,39 +65,40 @@ const Home: React.FC = () => {
       setCurrentLongitude(currentLongitude);
     });
     setWatchID(watchID);
-  }
-
+  }  
 
   useEffect(() => {
-    const getLocation = async () => {
+    const getLocationActual = async () => {
       try {
-        setLoading(true);
-        const response = await api.get(`/weather?lat=${currentLatitude}&lon=${currentLongitude}&appid=a788f547d04e1ae0fac1ecd5419ae2c1&units=metric`);
-        const { data } = response;
-        setCurrentLatitude(data.lon);
-        setCurrentLongitude(data.lat);
-        setCurrentTemperature(data.main.temp)
-        setCityName(data.name);
-        setIcon(data.weather);
-        setWind(data.wind.speed);
-        setHumidity(data.main.humidity);
-        setTemMin(data.main.temp_min);
-        setTemMax(data.main.temp_max);
+        if (currentLatitude && currentLongitude) {
+          const response = await api.get(`/?lat=${currentLatitude}&lon=${currentLongitude}&appid=a788f547d04e1ae0fac1ecd5419ae2c1&units=metric`);
+          const { data } = response;
+          setCurrentLatitude(data.coord.lat);
+          setCurrentLongitude(data.coord.lon);
+          setCurrentTemperature(data.main.temp)
+          setCityName(data.name);
+          setIcon(data.weather);
+          setWind(data.wind.speed);
+          setHumidity(data.main.humidity);
+          setTemMin(data.main.temp_min);
+          setTemMax(data.main.temp_max);
+        }
       } catch (err) {
-        console.log('FALHOOUUUU', err);
+        console.log('Erro ao conectar a api', err);
       } finally {
         setLoading(false);
       }
     }
-    getLocation();
+    getLocationActual();
     callLocation();
   }, []);
+
 
   return (
     <>
       {loading && (
         <S.BoxLoading>
-          <S.LoadingCustom size={'large'} />
+          <S.LoadingCustom size={'large'} color="#f00" />
           <S.LabelLoading>Carregando dados, por favor aguarde.</S.LabelLoading>
         </S.BoxLoading>
       )}
