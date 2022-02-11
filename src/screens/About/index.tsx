@@ -5,7 +5,7 @@ import * as S from './styles';
 const Cities: React.FC = () => {
   return (
     <S.Container>
-      <S.Label>Hello Screen About :D</S.Label>
+      <S.Label>Aplicação clima certo.</S.Label>
     </S.Container>
   );
 }
