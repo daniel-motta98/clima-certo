@@ -88,7 +88,6 @@ const Home: React.FC = () => {
         setLoading(false);
       }
     }
-    console.log(currentLatitude, currentLongitude)
     getLocationActual();
     callLocation();
   }, [currentLatitude, currentLongitude]);
