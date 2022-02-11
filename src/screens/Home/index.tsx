@@ -66,15 +66,14 @@ const Home: React.FC = () => {
     });
     setWatchID(watchID);
   }  
-
+  
   useEffect(() => {
     const getLocationActual = async () => {
       try {
+        setLoading(true)
         if (currentLatitude && currentLongitude) {
-          const response = await api.get(`/?lat=${currentLatitude}&lon=${currentLongitude}&appid=a788f547d04e1ae0fac1ecd5419ae2c1&units=metric`);
-          const { data } = response;
-          setCurrentLatitude(data.coord.lat);
-          setCurrentLongitude(data.coord.lon);
+        const response = await api.get(`/?lat=${currentLatitude}&lon=${currentLongitude}&appid=a788f547d04e1ae0fac1ecd5419ae2c1&units=metric`);
+        const { data } = response;
           setCurrentTemperature(data.main.temp)
           setCityName(data.name);
           setIcon(data.weather);
@@ -89,16 +88,17 @@ const Home: React.FC = () => {
         setLoading(false);
       }
     }
+    console.log(currentLatitude, currentLongitude)
     getLocationActual();
     callLocation();
-  }, []);
+  }, [currentLatitude, currentLongitude]);
 
 
   return (
     <>
       {loading && (
         <S.BoxLoading>
-          <S.LoadingCustom size={'large'} color="#f00" />
+          <S.LoadingCustom size={'large'} />
           <S.LabelLoading>Carregando dados, por favor aguarde.</S.LabelLoading>
         </S.BoxLoading>
       )}

@@ -1,11 +1,6 @@
 ## OBSERVAÇÔES DA APLICAÇÃO - Clima Certo
 
 - Ao de correr da semana tive uma série de imprevistos, o que acabou me consumindo muito mas não vou deixar de entregar o teste haha... Mesmo não tendo ficado como o desejado.
-
-# Tela inícial:
-    - Na tela inicial a temperatura é capturada automaticamente pela latitude e longitude independente de onde o usuário esteja, não ficou perfeito pois por algum motivo para ler as coordenadas ao abrir o aplicativo através do VSCode, assim que a tela inicial carregar, precionando o CTRL + S para fazer o fastRefresh, ai sim ele carrega.
-    Ou seja, as coordenandas estão sendo capturadas somente quando a tela da reloading.
-
 # Tela de Cidades:
     - Fiz o campo de busca, com botão de favorito. A ideia era: Ao usuário clicar no noração para favoritar, a cidade deveria ficar armazenada em cache, caso ele desmarcasse o favorito, a cidade sumiria. Não consegui aplicar essa ideia devido a outros empecilhos. Mas a ideia era armazenar usando o AsyncStorage, e sempre que o usuário clicasse para favoritar, iria criando uma lista de cidades favoritas.
 
